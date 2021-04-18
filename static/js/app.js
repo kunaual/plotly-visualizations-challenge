@@ -6,8 +6,30 @@ console.log("app.js loaded")
 function optionChanged(selectedVal) {
     console.log("selected value:" + selectedVal);
     barGraph(selectedVal);
+    demographics(selectedVal);
 }
 
+function demographics(sample) {
+
+    d3.json("data/samples.json").then(function (data) {
+        var filteredMeta = data.metadata.filter(x => x.id == sample)[0];
+        console.log(filteredMeta);
+        console.log(Object.keys(filteredMeta));
+        console.log(Object.values(filteredMeta));
+
+        var selection = d3.select("#sample-metadata").selectAll("div")
+        .data(Object.keys(filteredMeta));
+        
+        selection.enter()
+        .append("div")
+        .merge(selection)
+        .text(function (d) {
+            return d + " : " + filteredMeta[d];
+        });
+
+    });
+
+};
 function barGraph(sample) {
     //make horizontal bar graph of top 10 sample_values.  otu_ids as labels and otu_labels for hovertext.
     console.log("in barGraph");
@@ -37,7 +59,7 @@ function barGraph(sample) {
         var barGraphData = [barTrace];
 
         var layout = {
-            title: "Top 10 OTUs Found on Subject: " + sample,
+            title: "Top " + otuIds_labels.length + " OTUs Found on Subject: " + sample,
             margin: {
                 t: 30, l: 150
             }
@@ -85,11 +107,10 @@ function init() {
         });
 
         //initialize the graphics for the data from the first sample id
-        barGraph(data.names[0]);
+        //  barGraph(data.names[0]);
+        demographics(data.names[0]);
 
     });
-    console.log("whats the value displayed in the dropdown now?")
-    console.log(d3.select('#selDataset').node().value);
     // console.log(d3.select("selDataset").property("value"));
 
 

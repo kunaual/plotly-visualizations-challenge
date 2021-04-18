@@ -7,10 +7,9 @@ function optionChanged(selectedVal) {
     console.log("selected value:" + selectedVal);
     barGraph(selectedVal);
 }
-//need to make a bar graph
 
 function barGraph(sample) {
-    //make horizontal bar graph of sample_values.  otu_ids as labels and otu_labels for hovertext.
+    //make horizontal bar graph of top 10 sample_values.  otu_ids as labels and otu_labels for hovertext.
     console.log("in barGraph");
     d3.json("data/samples.json").then(function (data) {
         //console.log(data);
@@ -22,7 +21,7 @@ function barGraph(sample) {
         //top10 otu_ids store for labels
         otuIds_labels = filteredArr[0].otu_ids.slice(0, 10).reverse();
         //turn it into a label, by adding "OTU" to the #Id
-        otuIds_labels = otuIds_labels.map(id => "OTU "+ id);
+        otuIds_labels = otuIds_labels.map(id => "OTU " + id);
         console.log(otuIds_labels);
         otuLabels_hover = filteredArr[0].otu_labels.slice(0, 10).reverse();
         data = filteredArr[0].sample_values.slice(0, 10).reverse();
@@ -35,18 +34,16 @@ function barGraph(sample) {
             orientation: "h"
         };
 
-        // data
         var barGraphData = [barTrace];
 
-        // Apply the group bar mode to the layout
         var layout = {
-            title: "Top 10 OTUs found on subject: "+sample,
+            title: "Top 10 OTUs Found on Subject: " + sample,
             margin: {
                 t: 30, l: 150
             }
         };
 
-        // Render the plot to the div tag with id "plot"
+        // Render the plot to the div tag with id "bar"
         Plotly.newPlot("bar", barGraphData, layout);
 
 
@@ -72,19 +69,28 @@ function init() {
 
 
     d3.json("data/samples.json").then(function (data) {
-        console.log(data);
+        console.log(data.names[0]);
 
         var sampleNames = data.names;
         // console.log(sampleNames);
         //populate the dropdown with each of the sample names
-        sampleNames.forEach(sampleID => {
-            // console.log(sampleID);
+        sampleNames.forEach((sampleID, index) => {
+            if (index === 0) {
+                console.log("First one!");
+            }
             dropDown.append("option")
                 .text(sampleID)
                 .property("value", sampleID);
 
-        })
+        });
+
+        //initialize the graphics for the data from the first sample id
+        barGraph(data.names[0]);
+
     });
+    console.log("whats the value displayed in the dropdown now?")
+    console.log(d3.select('#selDataset').node().value);
+    // console.log(d3.select("selDataset").property("value"));
 
 
 }

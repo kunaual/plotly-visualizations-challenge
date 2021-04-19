@@ -7,6 +7,7 @@ function optionChanged(selectedVal) {
     console.log("selected value:" + selectedVal);
     barGraph(selectedVal);
     demographics(selectedVal);
+    bubbles(selectedVal);
 }
 
 function demographics(sample) {
@@ -18,17 +19,54 @@ function demographics(sample) {
         console.log(Object.values(filteredMeta));
 
         var selection = d3.select("#sample-metadata").selectAll("div")
-        .data(Object.keys(filteredMeta));
-        
+            .data(Object.keys(filteredMeta));
+
         selection.enter()
-        .append("div")
-        .merge(selection)
-        .text(function (d) {
-            return d + " : " + filteredMeta[d];
-        });
+            .append("div")
+            .merge(selection)
+            .text(function (d) {
+                return d + " : " + filteredMeta[d];
+            });
 
     });
 
+};
+
+function bubbles(sample) {
+    console.log("in bubbles");
+    console.log(sample);
+   
+
+    d3.json("data/samples.json").then(function (data) {
+
+        var samples = data.samples;
+        console.log(samples);
+        var filteredData = samples.filter(x => x.id == sample)[0];
+    console.log(filteredData);
+
+    var bubTrace = {
+        x: filteredData.otu_ids,
+        y: filteredData.sample_values,
+        text: filteredData.otu_labels,
+        mode: 'markers',
+        marker: {
+          color: filteredData.otu_ids,
+          size: filteredData.sample_values
+        }
+      };
+      
+      var data = [bubTrace];
+      
+      var layout = {
+       // title: 'Bubble Chart Hover Text',
+        showlegend: false,
+        height: 400,
+        width: 800
+      };
+      
+      Plotly.newPlot('bubble', data, layout);
+
+    })
 };
 function barGraph(sample) {
     //make horizontal bar graph of top 10 sample_values.  otu_ids as labels and otu_labels for hovertext.
@@ -108,7 +146,8 @@ function init() {
 
         //initialize the graphics for the data from the first sample id
         //  barGraph(data.names[0]);
-        demographics(data.names[0]);
+        //demographics(data.names[0]);
+        bubbles(data.names[0]);
 
     });
     // console.log(d3.select("selDataset").property("value"));

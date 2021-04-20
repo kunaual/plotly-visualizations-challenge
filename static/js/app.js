@@ -43,7 +43,12 @@ function bubbles(sample) {
         console.log(samples);
         var filteredData = samples.filter(x => x.id == sample)[0];
     console.log(filteredData);
-
+    
+// Use otu_ids for the x values.
+// Use sample_values for the y values.
+// Use sample_values for the marker size.
+// Use otu_ids for the marker colors.
+// Use otu_labels for the text values.
     var bubTrace = {
         x: filteredData.otu_ids,
         y: filteredData.sample_values,
@@ -51,7 +56,7 @@ function bubbles(sample) {
         mode: 'markers',
         marker: {
           color: filteredData.otu_ids,
-          size: filteredData.sample_values
+          size: filteredData.sample_values.map(d=>d/1.5)
         }
       };
       

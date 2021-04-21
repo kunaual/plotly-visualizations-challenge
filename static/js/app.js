@@ -2,7 +2,7 @@ console.log("app.js loaded")
 
 var currentTestSubject;
 
-// will need to add something for optionChanged  which is already in html
+
 //create function for event handler listed in html
 function optionChanged(selectedVal) {
     console.log("selected value:" + selectedVal);

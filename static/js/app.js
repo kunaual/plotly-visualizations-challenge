@@ -1,22 +1,32 @@
 console.log("app.js loaded")
 
+var currentTestSubject;
 
 // will need to add something for optionChanged  which is already in html
 //create function for event handler listed in html
 function optionChanged(selectedVal) {
     console.log("selected value:" + selectedVal);
+    currentTestSubject = selectedVal;
+    console.log("currentTestSubject " + currentTestSubject);
     barGraph(selectedVal);
     demographics(selectedVal);
-    bubbles(selectedVal);
+    bubbles(selectedVal, d3.select("#selBubscale").property("value"));
+    console.log(d3.select("#selBubscale").property("value"));
+}
+
+function bubOptionChanged(selectedScale) {
+    console.log("BubScale value:" + selectedScale);
+    console.log("currentTestSubject " + currentTestSubject);
+    bubbles(currentTestSubject, selectedScale);
 }
 
 function demographics(sample) {
 
     d3.json("data/samples.json").then(function (data) {
         var filteredMeta = data.metadata.filter(x => x.id == sample)[0];
-        console.log(filteredMeta);
-        console.log(Object.keys(filteredMeta));
-        console.log(Object.values(filteredMeta));
+        //console.log(filteredMeta);  //testing messages
+        //console.log(Object.keys(filteredMeta));
+        //console.log(Object.values(filteredMeta));
 
         var selection = d3.select("#sample-metadata").selectAll("div")
             .data(Object.keys(filteredMeta));
@@ -32,44 +42,44 @@ function demographics(sample) {
 
 };
 
-function bubbles(sample) {
+function bubbles(sample, scale) {
     console.log("in bubbles");
     console.log(sample);
-   
+
 
     d3.json("data/samples.json").then(function (data) {
 
         var samples = data.samples;
         console.log(samples);
         var filteredData = samples.filter(x => x.id == sample)[0];
-    console.log(filteredData);
-    
-// Use otu_ids for the x values.
-// Use sample_values for the y values.
-// Use sample_values for the marker size.
-// Use otu_ids for the marker colors.
-// Use otu_labels for the text values.
-    var bubTrace = {
-        x: filteredData.otu_ids,
-        y: filteredData.sample_values,
-        text: filteredData.otu_labels,
-        mode: 'markers',
-        marker: {
-          color: filteredData.otu_ids,
-          size: filteredData.sample_values.map(d=>d/1.5)
-        }
-      };
-      
-      var data = [bubTrace];
-      
-      var layout = {
-       // title: 'Bubble Chart Hover Text',
-        showlegend: false,
-        height: 400,
-        width: 800
-      };
-      
-      Plotly.newPlot('bubble', data, layout);
+        console.log(filteredData);
+
+        // Use otu_ids for the x values.
+        // Use sample_values for the y values.
+        // Use sample_values for the marker size.
+        // Use otu_ids for the marker colors.
+        // Use otu_labels for the text values.
+        var bubTrace = {
+            x: filteredData.otu_ids,
+            y: filteredData.sample_values,
+            text: filteredData.otu_labels,
+            mode: 'markers',
+            marker: {
+                color: filteredData.otu_ids,
+                size: filteredData.sample_values.map(d => d / scale)
+            }
+        };
+
+        var data = [bubTrace];
+
+        var layout = {
+            // title: 'Bubble Chart Hover Text',
+            showlegend: false,
+            height: 400,
+            width: 800
+        };
+
+        Plotly.newPlot('bubble', data, layout);
 
     })
 };
@@ -114,23 +124,18 @@ function barGraph(sample) {
 
     });
 
-
-
-
 }
-//make bubble chart
 
-//update demographis info
-
-//import data
-//generate initial charts ...b asically initialize page w/a set of data (bar, bubble, demo)
-
-// respond to change events
-
-//went to office hours where Dom went over parts of this init function
-//he also went over writing functions for everything, I would've done anyway (as I did with javascript UFO 2 work)
 function init() {
     var dropDown = d3.select('#selDataset');
+
+    var bubbleScale = d3.select('#selBubscale')
+        .selectAll('option')
+        .data([1, 2, 3, 5, 10])
+        .enter()
+        .append('option')
+        .attr('value', d => d)
+        .text(d => d);
 
 
     d3.json("data/samples.json").then(function (data) {
@@ -142,6 +147,7 @@ function init() {
         sampleNames.forEach((sampleID, index) => {
             if (index === 0) {
                 console.log("First one!");
+                currentTestSubject = sampleID;
             }
             dropDown.append("option")
                 .text(sampleID)
@@ -150,9 +156,9 @@ function init() {
         });
 
         //initialize the graphics for the data from the first sample id
-        //  barGraph(data.names[0]);
-        //demographics(data.names[0]);
-        bubbles(data.names[0]);
+        barGraph(data.names[0]);
+        demographics(data.names[0]);
+        bubbles(data.names[0], 1);
 
     });
     // console.log(d3.select("selDataset").property("value"));

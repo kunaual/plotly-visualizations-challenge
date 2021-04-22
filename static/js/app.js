@@ -130,12 +130,7 @@ function gauge(sample) {
 
     d3.json("data/samples.json").then(function (data) {
        console.log(data.metadata[0].wfreq) 
-        //console.log(filteredMeta);  //testing messages
-        //console.log(Object.keys(filteredMeta));
-        //console.log(Object.values(filteredMeta));
 
-        // var selection = d3.select("#sample-metadata").selectAll("div")
-        //     .data(Object.keys(filteredMeta));
 
         var filteredwFreq = data.metadata.filter(x => x.id == sample)[0].wfreq;
         console.log("filtered washfreq "+filteredwFreq);//filteredMeta.wfreq);
@@ -150,7 +145,7 @@ function gauge(sample) {
             {
               domain: { x: [0, 1], y: [0, 1] },
               value: filteredwFreq,
-              title: { text: "Scrubs per week" },
+              title: { text: "Wash frequency:\nScrubs per week" },
               type: "indicator",
               mode: "gauge+number",
               //delta: { reference: 380 },
@@ -158,9 +153,9 @@ function gauge(sample) {
                 axis: { range: [0, 9] },
                 bar: { color: "darkred" },
                 steps: [
-                  { range: [0, 1], color: "yellow" },
-                  { range: [1, 2], color: "greenyellow" },
-                  { range: [2, 3], color: "greenyellow" },
+                  { range: [0, 1], color: "orange" },
+                  { range: [1, 2], color: "yellow" },
+                  { range: [2, 3], color: "yellow" },
                   { range: [3, 4], color: "greenyellow" },
                   { range: [4, 5], color: "greenyellow" },
                   { range: [5, 6], color: "greenyellow" },

@@ -1,9 +1,9 @@
 console.log("bonus.js loaded");
 
 
-function optionChanged(selectedVal) {
-     gauge(selectedVal);
-}
+// function optionChanged(selectedVal) {
+//      gauge(selectedVal);
+// }
 function gauge(sample) {
 
     d3.json("data/samples.json").then(function (data) {
@@ -27,20 +27,24 @@ function gauge(sample) {
         var data = [
             {
               domain: { x: [0, 1], y: [0, 1] },
-              value: 450,
+              value: filteredwFreq,
               title: { text: "Scrubs per week" },
               type: "indicator",
-              mode: "gauge+number+delta",
-              delta: { reference: 380 },
+              mode: "gauge+number",
+              //delta: { reference: 380 },
               gauge: {
                 axis: { range: [0, 9] },
+                bar: { color: "darkred" },
                 steps: [
                   { range: [0, 1], color: "yellow" },
                   { range: [1, 2], color: "greenyellow" },
                   { range: [2, 3], color: "greenyellow" },
                   { range: [3, 4], color: "greenyellow" },
                   { range: [4, 5], color: "greenyellow" },
-                  { range: [5, 9], color: "brown" }
+                  { range: [5, 6], color: "greenyellow" },
+                  { range: [6, 7], color: "lightgreen" },
+                  { range: [7, 8], color: "lightgreen" },
+                  { range: [8, 9], color: "green" }
                 ],
                 // threshold: {
                 //   line: { color: "red", width: 4 },

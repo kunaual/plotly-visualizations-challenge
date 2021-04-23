@@ -133,13 +133,7 @@ function gauge(sample) {
 
 
         var filteredwFreq = data.metadata.filter(x => x.id == sample)[0].wfreq;
-        console.log("filtered washfreq "+filteredwFreq);//filteredMeta.wfreq);
-        // selection.enter()
-        //     .append("div")
-        //     .merge(selection)
-        //     .text(function (d) {
-        //         return d + " : " + filteredMeta[d];
-        //     });
+        console.log("filtered washfreq "+filteredwFreq);
 
         var data = [
             {
@@ -147,19 +141,16 @@ function gauge(sample) {
               value: filteredwFreq,
               title: { text: "Wash frequency:\nScrubs per week" },
               type: "indicator",
-              mode: "gauge+number",
+             mode: "gauge+number",
+             name: "speed",
               gauge: {
-                axis: { range: [0, 9] },
+                axis: { range: [0,9] },
                 bar: { color: "darkred" },
                 steps: [
                   { range: [0, 1], color: "orange" },
-                  { range: [1, 2], color: "yellow" },
-                  { range: [2, 3], color: "yellow" },
-                  { range: [3, 4], color: "greenyellow" },
-                  { range: [4, 5], color: "greenyellow" },
-                  { range: [5, 6], color: "greenyellow" },
-                  { range: [6, 7], color: "lightgreen" },
-                  { range: [7, 8], color: "lightgreen" },
+                  { range: [1, 3], color: "yellow" },
+                  { range: [3, 6], color: "greenyellow" },
+                  { range: [6, 8], color: "lightgreen" },
                   { range: [8, 9], color: "green" }
                 ],
               }

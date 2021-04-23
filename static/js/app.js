@@ -148,7 +148,6 @@ function gauge(sample) {
               title: { text: "Wash frequency:\nScrubs per week" },
               type: "indicator",
               mode: "gauge+number",
-              //delta: { reference: 380 },
               gauge: {
                 axis: { range: [0, 9] },
                 bar: { color: "darkred" },
@@ -163,11 +162,6 @@ function gauge(sample) {
                   { range: [7, 8], color: "lightgreen" },
                   { range: [8, 9], color: "green" }
                 ],
-                // threshold: {
-                //   line: { color: "red", width: 4 },
-                //   thickness: 0.75,
-                //   value: 490
-                // }
               }
             }
           ];

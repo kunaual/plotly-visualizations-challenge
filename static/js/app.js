@@ -55,11 +55,6 @@ function bubbles(sample, scale) {
         var filteredData = samples.filter(x => x.id == sample)[0];
         console.log(filteredData);
 
-        // Use otu_ids for the x values.
-        // Use sample_values for the y values.
-        // Use sample_values for the marker size.
-        // Use otu_ids for the marker colors.
-        // Use otu_labels for the text values.
         var bubTrace = {
             x: filteredData.otu_ids,
             y: filteredData.sample_values,
@@ -139,7 +134,7 @@ function gauge(sample) {
             {
               domain: { x: [0, 1], y: [0, 1] },
               value: filteredwFreq,
-              title: { text: "Wash frequency:\nScrubs per week" },
+              title: { text: "Wash frequency: Scrubs per week" },
               type: "indicator",
              mode: "gauge+number",
              name: "speed",

@@ -159,7 +159,8 @@ function gauge(sample) {
 
  }
 
-
+//I went to dom's office hours where he talked about init function and putting everything in functions. which I would've done anyway
+//as I've done with Javascript and other previous work.
 function init() {
     var dropDown = d3.select('#selDataset');
 
@@ -196,7 +197,7 @@ function init() {
         gauge(data.names[0]);
 
     });
-    // console.log(d3.select("selDataset").property("value"));
+    // console.log(d3.select("selDataset").property("value")); //testing msg
 
 
 }

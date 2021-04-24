@@ -1,7 +1,7 @@
 # plotly-visualizations-challenge
 Interactive-Visualizations-and-Dashboards
 
-Given  [Navel Biology dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), created a number of plotyly visualizations.
+Given  [Navel Biology dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), created a number of plotly visualizations.
 
 Repository contains the following:
 * data/samples.json - study's dataset

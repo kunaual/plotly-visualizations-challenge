@@ -71,8 +71,8 @@ function bubbles(sample, scale) {
         var layout = {
             // title: 'Bubble Chart Hover Text',
             showlegend: false,
-            height: 400,
-            width: 800
+            height: 500,
+            width: 1000
         };
 
         Plotly.newPlot('bubble', data, layout);

@@ -72,7 +72,7 @@ function bubbles(sample, scale) {
             // title: 'Bubble Chart Hover Text',
             showlegend: false,
             height: 500,
-            width: 1000
+            width: 1200
         };
 
         Plotly.newPlot('bubble', data, layout);
